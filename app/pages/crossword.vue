@@ -14,7 +14,7 @@ const leaderboard = game.leaderboard;
 const crosswordDeadlineAt = computed(() => {
     if (!crosswordStartedAt.value) return null;
     const started = new Date(crosswordStartedAt.value).getTime();
-    return new Date(started + 25 * 60 * 1000).toISOString();
+    return new Date(started + 10 * 60 * 1000).toISOString();
 });
 
 function getErrorMessage(err: unknown, fallback: string) {

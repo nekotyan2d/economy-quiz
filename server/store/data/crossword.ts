@@ -1,6 +1,6 @@
 import type { CrosswordWord } from "../types";
 
-export const CROSSWORD_DURATION_SECONDS = 25 * 60;
+export const CROSSWORD_DURATION_SECONDS = 10 * 60;
 
 export const crosswordWords: CrosswordWord[] = [
     {
