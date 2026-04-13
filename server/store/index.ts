@@ -398,6 +398,30 @@ export function finishGame() {
     emit("game-finished", {});
 }
 
+export function kickParticipant(sessionId: string) {
+    const participant = getParticipant(sessionId);
+
+    store.participants.delete(sessionId);
+    store.game.answeredSessionIds.delete(sessionId);
+
+    emit("participant-kicked", {
+        sessionId: participant.sessionId,
+        name: participant.name,
+        totalCount: store.participants.size,
+    });
+
+    const question = getCurrentQuestion();
+    if (question) {
+        emit("answer-progress", {
+            questionId: question.id,
+            answeredCount: store.game.answeredSessionIds.size,
+            totalCount: activeParticipantsCount(),
+        });
+    }
+
+    maybeAutoCloseQuestion();
+}
+
 export function resetGame() {
     if (store.questionTimer) clearTimeout(store.questionTimer);
     if (store.advanceTimer) clearTimeout(store.advanceTimer);

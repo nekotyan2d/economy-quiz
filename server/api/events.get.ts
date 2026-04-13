@@ -34,6 +34,7 @@ export default defineEventHandler((event) => {
                 "stage-ended",
                 "game-finished",
                 "participant-status",
+                "participant-kicked",
             ].includes(payload.event)
         ) {
             send("scores-updated", { leaderboard: getLeaderboard() });

@@ -173,6 +173,16 @@ export function useGame() {
                         : participant,
                 );
             },
+            "participant-kicked": (data) => {
+                const payload = data as { sessionId: string };
+                participants.value = participants.value.filter(
+                    (participant) => participant.sessionId !== payload.sessionId,
+                );
+
+                if (session.sessionId.value === payload.sessionId) {
+                    session.clearSession();
+                }
+            },
             "game-finished": () => {
                 phase.value = "finished";
             },

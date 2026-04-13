@@ -40,6 +40,10 @@ async function callAdmin(path: string, body?: Record<string, unknown>) {
     }
 }
 
+async function kickParticipant(sessionId: string) {
+    await callAdmin("/api/admin/kick", { sessionId });
+}
+
 onMounted(async () => {
     loadToken();
     await game.init();
@@ -84,8 +88,13 @@ useHead({
                 <li
                     v-for="person in participants"
                     :key="person.sessionId">
-                    <span>{{ person.name }}</span>
-                    <span>{{ person.onlineStatus }}</span>
+                    <span class="participant-name">{{ person.name }}</span>
+                    <span class="participant-status">{{ person.onlineStatus }}</span>
+                    <button
+                        class="danger participant-kick"
+                        @click="kickParticipant(person.sessionId)">
+                        Кикнуть
+                    </button>
                 </li>
             </ul>
         </section>
@@ -140,6 +149,16 @@ ul {
 }
 li {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.participant-name {
+    margin-right: auto;
+}
+.participant-status {
+    opacity: 0.8;
+}
+.participant-kick {
+    width: auto;
 }
 </style>
